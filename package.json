@@ -1,9 +1,9 @@
 {
   "name": "@hdanyal-ts/paperclip-plugin-agentmail",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "AgentMail → Paperclip: webhooks create issues with attachments; inbox-scoped REST tools. Independent third-party plugin (not tied to any employer org).",
   "type": "module",
-  "private": false,
+  "private": true,
   "license": "MIT",
   "author": "hdanyal-ts",
   "repository": {
@@ -46,7 +46,6 @@
   },
   "scripts": {
     "prebuild": "node ./scripts/ensure-sdk.mjs",
-    "prepublishOnly": "npm run build",
     "build": "tsc && node ./scripts/build-ui.mjs",
     "clean": "rm -rf dist",
     "typecheck": "tsc --noEmit",
@@ -73,8 +72,5 @@
   },
   "peerDependencies": {
     "react": ">=18"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

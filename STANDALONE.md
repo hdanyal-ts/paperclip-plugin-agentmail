@@ -1,6 +1,6 @@
 # Standalone GitHub repository
 
-This file is a **bootstrap for maintainers** who copy this package out of the Paperclip monorepo. End-user **install** options (npm, git, local path) are in **[README.md](./README.md)** first.
+This file is a **bootstrap for maintainers** who copy this package out of the Paperclip monorepo. End-user **install** options (git tag, release `.tgz`, local path) are in **[README.md](./README.md)** first.
 
 [THIRD_PARTY_PLUGINS.md](../../../doc/plugins/THIRD_PARTY_PLUGINS.md) explains how any third-party plugin is installed in Paperclip.
 
@@ -31,7 +31,7 @@ git pull /path/to/paperclip export-agentmail-plugin
 
 ## 3. Add CI and releases
 
-Copy [`publishing/standalone/.github`](publishing/standalone/.github) to the **repository root** if you want the sample workflows. The **release** workflow can upload **`npm pack`** output as a release asset; **npm** registry publish is optional (see [README.md](./README.md) “Publish (maintainers)”).
+Copy [`publishing/standalone/.github`](publishing/standalone/.github) to the **repository root** if you want the sample workflows. The **release** workflow runs **`npm pack`** and can attach the **`.tgz`** to a GitHub Release (no public npm registry required; see [README.md](./README.md) “Maintainers: GitHub releases”).
 
 ## 4. First tag
 
@@ -42,13 +42,13 @@ npm test
 git add -A
 git commit -m "chore: initial import"
 git push origin main
-git tag v0.3.1
-git push origin v0.3.1
+git tag v0.3.2
+git push origin v0.3.2
 ```
 
 Users can install with:
 
-`"packageName":"git+https://github.com/hdanyal-ts/paperclip-plugin-agentmail.git#v0.3.1"`
+`"packageName":"git+https://github.com/hdanyal-ts/paperclip-plugin-agentmail.git#v0.3.2"`
 
 (Adjust the version to match your tag.)
 

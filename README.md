@@ -6,9 +6,10 @@ This is a **third-party** plugin (not an official `paperclipai` product). Canoni
 
 | | |
 |---:|---|
-| **npm** | `@hdanyal-ts/paperclip-plugin-agentmail` |
+| **Package name** (e.g. monorepo filter) | `@hdanyal-ts/paperclip-plugin-agentmail` |
 | **Manifest / plugin id** | `hdanyal-ts.paperclip-plugin-agentmail` |
-| **Needs** | Paperclip-compatible host, **Node ≥ 20**, [`@paperclipai/plugin-sdk`](https://www.npmjs.com/package/@paperclipai/plugin-sdk) (resolved when you install the package) |
+| **Distribution** | **[GitHub](https://github.com/hdanyal-ts/paperclip-plugin-agentmail)** (git tag or [Release](https://github.com/hdanyal-ts/paperclip-plugin-agentmail/releases) asset) — not published on the public npm registry |
+| **Needs** | Paperclip-compatible host, **Node ≥ 20**, [`@paperclipai/plugin-sdk`](https://www.npmjs.com/package/@paperclipai/plugin-sdk) (fetched by `npm`/`pnpm` when installing from git, path, or a `.tgz`) |
 
 Install patterns for any host are also covered in [THIRD_PARTY_PLUGINS.md](https://github.com/paperclipai/paperclip/blob/master/doc/plugins/THIRD_PARTY_PLUGINS.md) (upstream) or `doc/plugins/THIRD_PARTY_PLUGINS.md` in this monorepo.
 
@@ -16,37 +17,29 @@ Install patterns for any host are also covered in [THIRD_PARTY_PLUGINS.md](https
 
 ## Install (choose one)
 
-Use the same `PAPERCLIP_HOME` / environment as your running instance for CLI commands.
+Use the same `PAPERCLIP_HOME` / environment as your running instance for CLI commands. This project is **not** published to the public **npm** registry; use **Git** or a **local path** (or a **`.tgz`** from a [GitHub Release](https://github.com/hdanyal-ts/paperclip-plugin-agentmail/releases) if you attach the CI `npm pack` output).
 
-### 1. npm registry
-
-```bash
-pnpm paperclipai plugin install @hdanyal-ts/paperclip-plugin-agentmail@0.3.1
-# or
-pnpm paperclipai plugin install @hdanyal-ts/paperclip-plugin-agentmail@latest
-```
-
-**Board:** Plugins → install → `@hdanyal-ts/paperclip-plugin-agentmail@<version>`.
-
-**HTTP API** (instance admin):
-
-```bash
-curl -X POST "https://<your-board-host>/api/plugins/install" \
-  -H "Content-Type: application/json" \
-  -d '{"packageName":"@hdanyal-ts/paperclip-plugin-agentmail@0.3.1"}'
-```
-
-### 2. Git tag (reproducible)
+### 1. Git tag (recommended)
 
 The Paperclip server runs `npm install` on the spec you pass—pin a **tag**.
 
 ```bash
 curl -X POST "https://<your-board-host>/api/plugins/install" \
   -H "Content-Type: application/json" \
-  -d '{"packageName":"git+https://github.com/hdanyal-ts/paperclip-plugin-agentmail.git#v0.3.1"}'
+  -d '{"packageName":"git+https://github.com/hdanyal-ts/paperclip-plugin-agentmail.git#v0.3.2"}'
+```
+
+**CLI** (match your board URL):
+
+```bash
+pnpm paperclipai plugin install "git+https://github.com/hdanyal-ts/paperclip-plugin-agentmail.git#v0.3.2"
 ```
 
 Private repos: the **host** must reach GitHub (SSH, credential helper, or token). Do not commit tokens into shared config.
+
+### 2. Release tarball (optional)
+
+If a **`.tgz`** is attached to a [Release](https://github.com/hdanyal-ts/paperclip-plugin-agentmail/releases), you can point `packageName` at the **URL** of that file (or download it and use a local path) — same install pipeline as any npm-compatible package source.
 
 ### 3. Local path (dev / air-gapped)
 
@@ -64,15 +57,9 @@ From this monorepo:
 pnpm --filter @hdanyal-ts/paperclip-plugin-agentmail build
 ```
 
-### Publish (maintainers)
+### Maintainers: GitHub releases
 
-`package.json` is public; after `npm login` to an account with **@hdanyal-ts** publish access:
-
-```bash
-npm publish
-```
-
-`prepublishOnly` runs `build`. **Exporting** this tree to the canonical GitHub repo: [STANDALONE.md](./STANDALONE.md).
+Source of truth is the [GitHub repository](https://github.com/hdanyal-ts/paperclip-plugin-agentmail). Push `main` and create **version tags** (e.g. `v0.3.2`); the **Release** workflow runs tests, **`npm run build`**, and **`npm pack`**, and can upload the **`.tgz`** to the release. **Exporting** from a full Paperclip fork: [STANDALONE.md](./STANDALONE.md).
 
 ---
 
