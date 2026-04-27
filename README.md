@@ -1,6 +1,4 @@
-# @hdanyal-ts/paperclip-plugin-agentmail
-
-**Independent third-party Paperclip plugin** — not part of the upstream [paperclipai/paperclip](https://github.com/paperclipai/paperclip) product repository, and not tied to any employer GitHub org. Distribute from **your** GitHub repository using **git URL install** (public or private) or a **local path**; public npm is optional. See [THIRD_PARTY_PLUGINS.md](../../../doc/plugins/THIRD_PARTY_PLUGINS.md) in a Paperclip monorepo checkout.
+# paperclip-plugin-agentmail
 
 **AgentMail → Paperclip:** inbound `message.received` over **webhooks** (Svix-verified) and/or **WebSockets** creates **issues** with **per-message idempotency** (`plugin_entities`), **attachments** as **issue documents**, and **REST** agent tools. Each mailbox stores the raw inbox **`am_…`** API key in plugin config; the webhook signing secret (`whsec_…`) can still use a Paperclip secret reference when using webhooks.
 
