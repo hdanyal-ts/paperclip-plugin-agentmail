@@ -1,0 +1,76 @@
+{
+  "name": "@hdanyal-ts/paperclip-plugin-agentmail",
+  "version": "0.3.0",
+  "description": "AgentMail → Paperclip: webhooks create issues with attachments; inbox-scoped REST tools. Independent third-party plugin (not tied to any employer org).",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "author": "hdanyal-ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hdanyal-ts/paperclip-plugin-agentmail.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hdanyal-ts/paperclip-plugin-agentmail/issues"
+  },
+  "homepage": "https://github.com/hdanyal-ts/paperclip-plugin-agentmail#readme",
+  "keywords": [
+    "paperclip",
+    "plugin",
+    "agentmail",
+    "email",
+    "third-party"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "STANDALONE.md"
+  ],
+  "paperclipPlugin": {
+    "manifest": "./dist/manifest.js",
+    "worker": "./dist/worker.js",
+    "ui": "./dist/ui/"
+  },
+  "scripts": {
+    "prebuild": "node ./scripts/ensure-sdk.mjs",
+    "build": "tsc && node ./scripts/build-ui.mjs",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@paperclipai/plugin-sdk": "^2026.416.0",
+    "html-to-text": "^9.0.5",
+    "mammoth": "^1.12.0",
+    "pdf-parse": "^1.1.1",
+    "svix": "^1.59.2",
+    "ws": "^8.19.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.0",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "@types/ws": "^8.18.1",
+    "esbuild": "^0.27.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  }
+}
