@@ -5,10 +5,10 @@ import {
   EXPORT_SETTINGS,
   JOB_KEY_UNREAD_SYNC,
   PLUGIN_ID,
-  PLUGIN_VERSION,
   TOOL_NAMES,
   WEBHOOK_KEY,
 } from "./constants.js";
+import { PLUGIN_VERSION } from "./version.js";
 
 const assignmentItemSchema = {
   type: "object",
@@ -70,7 +70,7 @@ const manifest: PaperclipPluginManifestV1 = {
   displayName: "AgentMail Paperclip",
   description:
     "Creates Paperclip issues from AgentMail inbound email (message.received via webhook and/or WebSocket) with attachments on the issue. Agents use REST tools with inbox-scoped keys.",
-  author: "hdanyal-ts",
+  author: "hdanyal",
   categories: ["connector", "automation"],
   capabilities: [
     "companies.read",

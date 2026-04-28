@@ -1,12 +1,10 @@
 # Standalone GitHub Actions templates
 
-Copy the contents of this directory to the **root** of your plugin’s git repository (so `.github/workflows/` sits next to `package.json`).
+Copy the contents of this directory to the **root** of your plugin repo so `.github/workflows/` sits next to **`package.json`**.
 
-- **ci.yml** — on push/PR: `npm install`, typecheck, test, build.
-- **release.yml** — on tag `v*.*.*`: test, build, `npm pack`, upload the resulting **`.tgz`** to a **GitHub Release** (see [third-party plugins](https://github.com/paperclipai/paperclip/blob/master/doc/plugins/THIRD_PARTY_PLUGINS.md) — no public npm account required).
+- **`ci.yml`** — on push / PR: `npm ci`, **`npm run verify`** (typecheck, tests, build, **`npm pack`** dry-run).
+- **`release.yml`** — on tag `v*.*.*`: **`verify`**, create tarball (**`npm pack --ignore-scripts`**), optionally **`npm publish`** when **`NPM_TOKEN`** is set, attach **`.tgz`** to GitHub Release.
 
-**Optional public npm publish:** if you add `"private": false` and a registry token, you can add a step or a separate job with `NPM_TOKEN`.
+[`package-lock.json`](../../package-lock.json) should exist for **`npm ci`** in CI — run **`npm install`** locally once and commit the lockfile.
 
-For a reproducible `pnpm ci` in CI, run `npm install` once locally, commit **`package-lock.json`**, and change the **Install** step to `npm ci`.
-
-See [STANDALONE.md](../../STANDALONE.md).
+Upstream: [THIRD_PARTY_PLUGINS.md](https://github.com/paperclipai/paperclip/blob/master/doc/plugins/THIRD_PARTY_PLUGINS.md). See **[STANDALONE.md](../../STANDALONE.md)** for repo bootstrap notes.

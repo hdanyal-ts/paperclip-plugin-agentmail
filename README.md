@@ -1,65 +1,76 @@
-# @hdanyal-ts/paperclip-plugin-agentmail
+# @hdanyal/paperclip-plugin-agentmail
 
 **AgentMail → Paperclip work** in one bridge. Inbound mail becomes **issues** and **documents**; agents get **REST tools** to read threads and reply—without leaving your [Paperclip](https://github.com/paperclipai/paperclip) control plane.
 
-This is a **third-party** plugin (not an official `paperclipai` product). Canonical source: **[github.com/hdanyal-ts/paperclip-plugin-agentmail](https://github.com/hdanyal-ts/paperclip-plugin-agentmail)**. In-repo path in a Paperclip fork: `packages/plugins/plugin-agentmail-paperclip`.
+This is a **third-party** plugin (not an official `paperclipai` product). **Canonical source:** [github.com/hdanyal/paperclip-plugin-agentmail](https://github.com/hdanyal/paperclip-plugin-agentmail).
 
 | | |
 |---:|---|
-| **Package name** (e.g. monorepo filter) | `@hdanyal-ts/paperclip-plugin-agentmail` |
-| **Manifest / plugin id** | `hdanyal-ts.paperclip-plugin-agentmail` |
-| **Distribution** | **[GitHub](https://github.com/hdanyal-ts/paperclip-plugin-agentmail)** (git tag or [Release](https://github.com/hdanyal-ts/paperclip-plugin-agentmail/releases) asset) — not published on the public npm registry |
-| **Needs** | Paperclip-compatible host, **Node ≥ 20**, [`@paperclipai/plugin-sdk`](https://www.npmjs.com/package/@paperclipai/plugin-sdk) (fetched by `npm`/`pnpm` when installing from git, path, or a `.tgz`) |
+| **Package name** (npm) | [`@hdanyal/paperclip-plugin-agentmail`](https://www.npmjs.com/package/@hdanyal/paperclip-plugin-agentmail) |
+| **Manifest / plugin id** | `hdanyal.paperclip-plugin-agentmail` |
+| **Distribution** | **npm** (recommended), **[GitHub](https://github.com/hdanyal/paperclip-plugin-agentmail)** (git tag or [Release](https://github.com/hdanyal/paperclip-plugin-agentmail/releases) `.tgz`), or **local path** |
+| **Needs** | Paperclip-compatible host, **Node ≥ 20**, [`@paperclipai/plugin-sdk`](https://www.npmjs.com/package/@paperclipai/plugin-sdk) (declared dependency) |
 
-Install patterns for any host are also covered in [THIRD_PARTY_PLUGINS.md](https://github.com/paperclipai/paperclip/blob/master/doc/plugins/THIRD_PARTY_PLUGINS.md) (upstream) or `doc/plugins/THIRD_PARTY_PLUGINS.md` in this monorepo.
+**Compatibility (tested baseline):** **`@paperclipai/plugin-sdk`** `2026.427.x`, **Node** 20+, **AgentMail** HTTPS + WebSocket endpoints per [AgentMail docs](https://docs.agentmail.to). Pin your host and plugin versions per your environment.
+
+Install patterns for Paperclip hosts are also described in [THIRD_PARTY_PLUGINS.md](https://github.com/paperclipai/paperclip/blob/master/doc/plugins/THIRD_PARTY_PLUGINS.md) upstream.
 
 ---
 
 ## Install (choose one)
 
-Use the same `PAPERCLIP_HOME` / environment as your running instance for CLI commands. This project is **not** published to the public **npm** registry; use **Git** or a **local path** (or a **`.tgz`** from a [GitHub Release](https://github.com/hdanyal-ts/paperclip-plugin-agentmail/releases) if you attach the CI `npm pack` output).
+Use the same Paperclip CLI / host environment as your running instance.
 
-### 1. Git tag (recommended)
+### 1. npm (recommended)
 
-The Paperclip server runs `npm install` on the spec you pass—pin a **tag**.
+Requires a running Paperclip-compatible host. If you do not have Paperclip yet, start with [Paperclip](https://github.com/paperclipai/paperclip) (e.g. `paperclipai onboard` / `paperclipai run` per upstream docs).
+
+```bash
+npx paperclipai plugin install @hdanyal/paperclip-plugin-agentmail
+```
+
+Or, if `paperclipai` is already on your `PATH`:
+
+```bash
+paperclipai plugin install @hdanyal/paperclip-plugin-agentmail
+```
+
+### 2. Git tag
+
+The host runs `npm install` on the spec you pass—pin a **semver tag**.
 
 ```bash
 curl -X POST "https://<your-board-host>/api/plugins/install" \
   -H "Content-Type: application/json" \
-  -d '{"packageName":"git+https://github.com/hdanyal-ts/paperclip-plugin-agentmail.git#v0.3.2"}'
+  -d '{"packageName":"git+https://github.com/hdanyal/paperclip-plugin-agentmail.git#v1.0.0"}'
 ```
 
-**CLI** (match your board URL):
+### 3. Release tarball (optional)
+
+If a **`.tgz`** is attached to a [Release](https://github.com/hdanyal/paperclip-plugin-agentmail/releases), point `packageName` at that file URL or install from a downloaded path.
+
+### 4. Local path (contributors / air-gapped)
 
 ```bash
-pnpm paperclipai plugin install "git+https://github.com/hdanyal-ts/paperclip-plugin-agentmail.git#v0.3.2"
-```
-
-Private repos: the **host** must reach GitHub (SSH, credential helper, or token). Do not commit tokens into shared config.
-
-### 2. Release tarball (optional)
-
-If a **`.tgz`** is attached to a [Release](https://github.com/hdanyal-ts/paperclip-plugin-agentmail/releases), you can point `packageName` at the **URL** of that file (or download it and use a local path) — same install pipeline as any npm-compatible package source.
-
-### 3. Local path (dev / air-gapped)
-
-Build first (`npm run build` → `dist/`).
-
-```bash
-curl -X POST http://127.0.0.1:3100/api/plugins/install \
+npm run build
+curl -X POST "https://<your-board-host>/api/plugins/install" \
   -H "Content-Type: application/json" \
   -d '{"packageName":"/absolute/path/to/paperclip-plugin-agentmail","isLocalPath":true}'
 ```
 
-From this monorepo:
+Inside a full Paperclip monorepo (optional dev flow):
 
 ```bash
-pnpm --filter @hdanyal-ts/paperclip-plugin-agentmail build
+pnpm --filter @hdanyal/paperclip-plugin-agentmail build
 ```
 
-### Maintainers: GitHub releases
+---
 
-Source of truth is the [GitHub repository](https://github.com/hdanyal-ts/paperclip-plugin-agentmail). Push `main` and create **version tags** (e.g. `v0.3.2`); the **Release** workflow runs tests, **`npm run build`**, and **`npm pack`**, and can upload the **`.tgz`** to the release. **Exporting** from a full Paperclip fork: [STANDALONE.md](./STANDALONE.md).
+## Prerequisites
+
+- **Paperclip** (or compatible host) with plugin install support.
+- **Node** ≥ 20 for local builds.
+- **AgentMail** account, inboxes, and (for webhooks) signing secret as described in settings.
 
 ---
 
@@ -80,11 +91,23 @@ Live events drive the pipeline; if Paperclip was **down**, **unread catch-up** r
 
 ---
 
+## Package boundary
+
+- **Paperclip** is the host and system of record for issues, documents, and secrets.
+- This plugin uses [`@paperclipai/plugin-sdk`](https://www.npmjs.com/package/@paperclipai/plugin-sdk) for the worker, manifest, and settings UI.
+- Outbound calls use **AgentMail’s public HTTP/WebSocket APIs** (`https://api.agentmail.to`, `wss://…` by default). Configure bases in instance settings if AgentMail documents alternates.
+
+---
+
 ## Upgrading from older plugin ids
 
-If you used **`paperclipai.agentmail-paperclip`** or another old manifest id: **remove** the old instance in Plugin Manager, **reinstall**, re-apply settings, and point AgentMail at the current webhook:
+**`hdanyal-ts.paperclip-plugin-agentmail`:** Remove the old plugin instance in Plugin Manager, reinstall with **1.x** (npm or git), re-apply settings, and register the new webhook URL in AgentMail:
 
-`https://<your-board-host>/api/plugins/hdanyal-ts.paperclip-plugin-agentmail/webhooks/agentmail-inbound`
+`https://<your-board-host>/api/plugins/hdanyal.paperclip-plugin-agentmail/webhooks/agentmail-inbound`
+
+If you used **`paperclipai.agentmail-paperclip`** or other legacy ids, same flow: remove, reinstall, reconfigure.
+
+See [CHANGELOG.md](./CHANGELOG.md) for **1.0.0** breaking changes.
 
 ---
 
@@ -92,54 +115,38 @@ If you used **`paperclipai.agentmail-paperclip`** or another old manifest id: **
 
 - **Delivery you can mix:** **`message.received`** over **HTTPS webhooks** (Svix-signed) and/or an **outbound WebSocket** to AgentMail (`wss://…/v0` + per-inbox `am_…` key). Same `issues` + `issue.documents` pipeline; **`message_id`** dedup if you run **both** during a migration.
 - **One issue per thread:** `agentmail.thread` maps `inbox_id:thread_id` to a single issue. Replies **comment**, bump the issue to **`todo`**, and re-run attachment ingest (so a late PDF still lands on the right card). Odd `thread_id` on a reply is merged using **`in_reply_to` / `references`**, or **`GET /messages/{id}`** when the webhook is thin. Stale thread rows fall back sensibly before opening a duplicate issue.
-- **Attachments that actually show up:** Payloads are **merged** with `GET /messages/{id}`; ids accept `attachment_id`, `id`, or `attachmentId`. If both sides are empty briefly, the worker **retries** once after a short delay.
-- **Dedup before noise:** `agentmail.message` tracks AgentMail `message_id` so replays do not duplicate work.
+- **Attachments:** Payloads are **merged** with `GET /messages/{id}`; ids accept `attachment_id`, `id`, or `attachmentId`. If both sides are empty briefly, the worker **retries** once after a short delay.
+- **Dedup:** `agentmail.message` tracks AgentMail `message_id` so replays do not duplicate work.
 - **Routing:** `mailboxes[]` / `assignments[]`, plus optional **`recipientMatch`** when humans share one inbox.
-- **Operator context:** `handlingInstructions` fold into the issue description.
-- **Agent tools (REST):** `agentmail_get_handling_context`, `agentmail_list_messages`, `agentmail_get_message`, **`agentmail_get_thread`**, `agentmail_send_message`, `agentmail_reply_to_message`. Tool names are **`hdanyal-ts.paperclip-plugin-agentmail:<bare_name>`**. Inbound issues carry an **`### AgentMail`** block. For prompt examples, see `skills/paperclip/SKILL.md` in a full Paperclip checkout.
-- **Spam guard:** optional **skip issue creation** when labels match `attachmentPolicy.skipIfLabels` (default includes spam-like labels).
-- **Unread catch-up** and **blog dedupe** (optional)—see below.
+- **Agent tools:** `agentmail_get_handling_context`, `agentmail_list_messages`, `agentmail_get_message`, **`agentmail_get_thread`**, `agentmail_send_message`, `agentmail_reply_to_message`. Names are prefixed as **`hdanyal.paperclip-plugin-agentmail:<bare_tool_name>`** for the invoking agent.
 
 ---
 
 ## Unread catch-up and wakeup sync
 
-If Paperclip or the worker **is not running**, webhooks and WS frames do not run—but **mail still arrives** in AgentMail, often as **`unread`**. This plugin **catches up** by listing unread mail per mailbox and feeding it through the **same ingest code** as live traffic (internal source `catchup`, ids like `catchup:{message_id}`). Existing **`message_id`** dedup keeps reruns safe.
-
-**When it runs**
+If Paperclip or the worker **is not running**, webhooks and WS frames may not run—but **mail still arrives** in AgentMail, often as **`unread`**. This plugin **catches up** by listing unread mail per mailbox and feeding it through the **same ingest code** as live traffic (internal source `catchup`, ids like `catchup:{message_id}`).
 
 | Trigger | What happens |
 |--------|----------------|
-| **Worker startup** | **Sync unread on startup** (default **on**) kicks a pass after the worker is up. |
-| **Config saved** | With startup sync on, saving settings triggers a pass (useful after mailbox edits). |
-| **Scheduled job** | Job key **`unread_sync`** (“Unread mail reconciliation”) runs on a **once-per-minute** host schedule. **`unreadSyncIntervalSeconds`** (default **300**) throttles how often a **scheduled** run does real work after the last one. Set to **0** to **disable that throttle** (job can work every tick, still capped per mailbox and by the lock)—**not** a no-op. |
-| **Manual** | In **Plugin Manager → this plugin → Settings**, **Sync unread now** runs immediately and returns JSON; the UI can show the last **sync summary**. |
+| **Worker startup** | **Sync unread on startup** (default **on**). |
+| **Config saved** | With startup sync on, saving settings triggers a pass. |
+| **Scheduled job** | Job **`unread_sync`** on host cron; **`unreadSyncIntervalSeconds`** throttles repeated work (default **300** s). **`0`** disables that throttle only. |
+| **Manual** | Plugin settings UI: **Sync unread now**. |
 
-**Settings** (also in the **Catch-up** card in the UI; full schema: `instanceConfigSchema` in `src/manifest.ts`):
-
-- **`unreadSyncOnStartup`** — Run on worker start and after config change when `true` (default `true`).
-- **`unreadSyncIntervalSeconds`** — Minimum gap between **scheduled** runs that process work (`0`–`86400`, default `300`). Does not slow **startup** or **manual** sync.
-- **`unreadSyncMaxPerRun`** — Max messages **per mailbox** per run (`1`–`500`, default `50`) so one huge backlog cannot wedged the worker.
-
-**Safety + visibility**
-
-- A **distributed lock** (instance state) prevents overlapping catch-up; if the lock is held, another run may log and exit early.
-- Per-run **stats** feed the “last unread sync summary” for the UI.
-
-**Marking read:** after a successful catch-up ingest, the worker can strip AgentMail’s **`unread`** label, same rules as live mail. If **blog dedupe** is on, **`blogDedupe.markReadOnDuplicate`** decides whether duplicates should still clear `unread` (default: clear).
+See **`instanceConfigSchema`** in [`src/manifest.ts`](src/manifest.ts).
 
 ---
 
 ## Blog dedupe (optional)
 
-Optional **fingerprinting** for blog-style mail: title+body (or PDF/DOCX text), optional **sitemap** URL checks, optional small **visibility issues** when duplicates are detected. Same pipeline as webhooks—**including catch-up**. Fields: **`blogDedupe.enabled`**, **`sitemapUrls`**, **`markReadOnDuplicate`**, **`createIssueForDuplicate`**, plus extraction limits—see the settings form and `src/manifest.ts`.
+Optional fingerprinting for blog-style mail and optional visibility issues — see settings and **`instanceConfigSchema`**.
 
 ---
 
 ## Security
 
-- Treat **`am_…`** inbox keys and **`whsec_…`** webhook secrets as **secrets**; use Paperclip **secret references** for webhook material, not plaintext in repos.
-- Prefer **HTTPS** for the board host; lock down who may call **`/api/plugins/install`**.
+- Treat **`am_…`** inbox keys and **`whsec_…`** webhook secrets as **secrets** (Paperclip secret references for webhook material).
+- Prefer **HTTPS** for the board host.
 
 ---
 
@@ -148,22 +155,37 @@ Optional **fingerprinting** for blog-style mail: title+body (or PDF/DOCX text), 
 | | Webhook (default) | WebSocket |
 |---|-------------------|-----------|
 | **Inbound URL** | Public `POST` on your Paperclip host | None — worker dials **out** to AgentMail |
-| **Trust** | Svix signature (`whsec_…`) | TLS + inbox key in the WS URL (no Svix on frames) |
-| **When to use** | Common in production | Dev, tight egress, or “no public URL” setups — [AgentMail WebSockets](https://docs.agentmail.to/websockets/quickstart.md) |
-
-In settings, **Event delivery** is `webhook`, `websocket`, or `both` (duplicates dedupe on `message_id`).
+| **Trust** | Svix signature | TLS + inbox key in the WS URL |
 
 ---
 
 ## Configure (checklist)
 
-1. For **webhook** or **both**: store AgentMail’s **`whsec_…`** as a Paperclip **secret**; put its **reference** in **Webhook secret ref**. Put each inbox **`am_…`** key in the mailbox row (plugin config).
-2. **Plugin Manager → AgentMail → Settings → Core:** **Company ID**, **Event delivery**, webhook ref, and optional **WebSocket URL**, **default project**, **API base**, **title prefix**.
-3. **Mailboxes:** inboxes, assignments, optional **Only when addressed to** for shared inboxes.
-4. **Save configuration.**
-5. In **AgentMail**, set the **Inbound URL** from the plugin’s Webhook card:  
-   `https://<your-board-host>/api/plugins/hdanyal-ts.paperclip-plugin-agentmail/webhooks/agentmail-inbound`  
-   (If your host uses an install-specific path, use the URL the UI shows.)
+1. Webhook **`whsec_…`** → Paperclip secret reference in **Webhook secret ref**; inbox **`am_…`** keys in mailbox rows.
+2. **Plugin Manager → AgentMail settings:** Company ID, event delivery, API base / WS URL, optional default project.
+3. **Save**.
+4. In **AgentMail**, set **Inbound URL** from the UI to:  
+   `https://<your-board-host>/api/plugins/hdanyal.paperclip-plugin-agentmail/webhooks/agentmail-inbound`
+
+---
+
+## Development
+
+Clone [the repository](https://github.com/hdanyal/paperclip-plugin-agentmail), then:
+
+```bash
+npm ci
+npm run verify
+```
+
+Local Paperclip smoke install (example):
+
+```bash
+npm run build
+npx paperclipai plugin install --local "$(pwd)"
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/BUILDING-PAPERCLIP-PLUGINS.md](docs/BUILDING-PAPERCLIP-PLUGINS.md).
 
 ---
 
@@ -173,11 +195,19 @@ Happy path (worker finishes without throwing) → **200**. Verification failures
 
 ---
 
+## Maintainers
+
+- **Canonical repo:** [`hdanyal/paperclip-plugin-agentmail`](https://github.com/hdanyal/paperclip-plugin-agentmail). Tag **`v*`** releases aligned with **`package.json` `version`**, **`CHANGELOG.md`**, manifest version (derived from `package.json`), and npm when publishing.
+- **npm publish CI:** Configure repository secret **`NPM_TOKEN`** so the Release workflow can publish (see [.github/workflows/release.yml](.github/workflows/release.yml)). Without it, the workflow still builds and attaches the tarball to the GitHub Release.
+- **Pre-publish validation:** [docs/PRE_PUBLISH_CHECKLIST.md](docs/PRE_PUBLISH_CHECKLIST.md).
+
+---
+
 ## References
 
 - [Paperclip plugin spec](https://github.com/paperclipai/paperclip/blob/master/doc/plugins/PLUGIN_SPEC.md)
 - [AgentMail webhook setup](https://docs.agentmail.to/webhook-setup.mdx)
-- [`message.received`](https://docs.agentmail.to/api-reference/webhooks/events/message-received.mdx)
+- [message.received](https://docs.agentmail.to/api-reference/webhooks/events/message-received.mdx)
 
 ---
 
@@ -187,11 +217,13 @@ Happy path (worker finishes without throwing) → **200**. Verification failures
 npm test
 ```
 
-Paperclip monorepo:
+Monorepo (optional):
 
 ```bash
-pnpm --filter @hdanyal-ts/paperclip-plugin-agentmail test
+pnpm --filter @hdanyal/paperclip-plugin-agentmail test
 ```
+
+---
 
 ## Contributing / changelog
 

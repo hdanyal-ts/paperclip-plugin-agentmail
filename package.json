@@ -1,19 +1,19 @@
 {
-  "name": "@hdanyal-ts/paperclip-plugin-agentmail",
-  "version": "0.3.2",
+  "name": "@hdanyal/paperclip-plugin-agentmail",
+  "version": "1.0.0",
   "description": "AgentMail → Paperclip: webhooks create issues with attachments; inbox-scoped REST tools. Independent third-party plugin (not tied to any employer org).",
   "type": "module",
-  "private": true,
+  "private": false,
   "license": "MIT",
-  "author": "hdanyal-ts",
+  "author": "hdanyal",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hdanyal-ts/paperclip-plugin-agentmail.git"
+    "url": "https://github.com/hdanyal/paperclip-plugin-agentmail.git"
   },
   "bugs": {
-    "url": "https://github.com/hdanyal-ts/paperclip-plugin-agentmail/issues"
+    "url": "https://github.com/hdanyal/paperclip-plugin-agentmail/issues"
   },
-  "homepage": "https://github.com/hdanyal-ts/paperclip-plugin-agentmail#readme",
+  "homepage": "https://github.com/hdanyal/paperclip-plugin-agentmail#readme",
   "keywords": [
     "paperclip",
     "plugin",
@@ -32,12 +32,15 @@
   },
   "types": "./dist/index.d.ts",
   "files": [
-    "dist",
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "dist/**/*.d.ts.map",
     "README.md",
     "LICENSE",
     "CHANGELOG.md",
     "CONTRIBUTING.md",
-    "STANDALONE.md"
+    "STANDALONE.md",
+    "docs"
   ],
   "paperclipPlugin": {
     "manifest": "./dist/manifest.js",
@@ -49,10 +52,14 @@
     "build": "tsc && node ./scripts/build-ui.mjs",
     "clean": "rm -rf dist",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "pack:check": "npm pack --dry-run --ignore-scripts",
+    "prepack": "npm run build",
+    "verify": "npm run typecheck && npm run test && npm run build && npm run pack:check",
+    "release:check": "npm run verify"
   },
   "dependencies": {
-    "@paperclipai/plugin-sdk": "^2026.427.0",
+    "@paperclipai/plugin-sdk": "2026.427.0",
     "html-to-text": "^9.0.5",
     "mammoth": "^1.12.0",
     "pdf-parse": "^1.1.1",
@@ -72,5 +79,8 @@
   },
   "peerDependencies": {
     "react": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

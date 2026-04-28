@@ -7,7 +7,6 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { createRequire } from "node:module";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageRoot = path.resolve(__dirname, "..");
@@ -19,18 +18,11 @@ if (fs.existsSync(monorepoEnsure)) {
   if (result.error) throw result.error;
   if (result.status !== 0) process.exit(result.status ?? 1);
 } else {
-  const require = createRequire(import.meta.url);
-  let sdkEntry;
-  try {
-    sdkEntry = require.resolve("@paperclipai/plugin-sdk");
-  } catch {
+  const sdkPkg = path.join(packageRoot, "node_modules", "@paperclipai", "plugin-sdk", "package.json");
+  if (!fs.existsSync(sdkPkg)) {
     console.error(
-      "[plugin-agentmail-paperclip] Run `npm install` (or pnpm / yarn) so @paperclipai/plugin-sdk is installed from npm."
+      "[paperclip-plugin-agentmail] Run `npm ci` / `npm install` so `@paperclipai/plugin-sdk` is installed from npm.",
     );
-    process.exit(1);
-  }
-  if (!fs.existsSync(sdkEntry)) {
-    console.error(`[plugin-agentmail-paperclip] @paperclipai/plugin-sdk resolved to missing file: ${sdkEntry}`);
     process.exit(1);
   }
 }

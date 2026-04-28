@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-04-28
+
+### BREAKING CHANGE
+
+- **Plugin identity (`hdanyal` scope):** npm package **`@hdanyal/paperclip-plugin-agentmail`**, GitHub **`hdanyal/paperclip-plugin-agentmail`**, manifest / plugin id **`hdanyal.paperclip-plugin-agentmail`**.
+- **Migrating from `@hdanyal-ts`/ `hdanyal-ts.paperclip-plugin-agentmail`:** remove the old plugin instance in Paperclip, reinstall this package, re-apply AgentMail-related settings, and register the **new** webhook URL (see [README](./README.md#upgrading-from-older-plugin-ids)).
+
+### Changed
+
+- **npm:** `private: false`, `publishConfig.access: public`, **`prepack`** runs **`npm run build`**, **`verify`** runs typecheck → test → build → **`npm pack --dry-run`**.
+- **`@paperclipai/plugin-sdk`** pinned to **`2026.427.0`** for reproducible builds.
+- **Manifest version** resolves from **`package.json`** via `src/version.ts` (worker-side read of package JSON at runtime).
+
+### Added
+
+- `docs/BUILDING-PAPERCLIP-PLUGINS.md` and `docs/PRE_PUBLISH_CHECKLIST.md` for maintainers.
+
+[1.0.0]: https://github.com/hdanyal/paperclip-plugin-agentmail/releases/tag/v1.0.0
+
 ## [0.3.2] - 2026-04-27
 
 ### Changed

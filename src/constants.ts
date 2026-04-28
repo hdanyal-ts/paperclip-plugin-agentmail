@@ -1,5 +1,4 @@
-export const PLUGIN_ID = "hdanyal-ts.paperclip-plugin-agentmail";
-export const PLUGIN_VERSION = "0.1.0";
+export const PLUGIN_ID = "hdanyal.paperclip-plugin-agentmail";
 export const WEBHOOK_KEY = "agentmail-inbound";
 export const EXPORT_SETTINGS = "AgentmailSettingsPage";
 export const ENTITY_TYPE_MESSAGE = "agentmail.message";
