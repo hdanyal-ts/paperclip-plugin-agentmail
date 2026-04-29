@@ -35,6 +35,10 @@ Or, if `paperclipai` is already on your `PATH`:
 paperclipai plugin install @hdanyal/paperclip-plugin-agentmail
 ```
 
+That path (and the board UI) only uses the published **`dist/`** bundle and **`paperclipPlugin`** fields—**not** the optional maintainer scripts below.
+
+Optional **`pnpm run paperclip:dev-sync`** / **`paperclip:dev-sync:build`**: helper to point a **local dev** Paperclip at this folder (see [§4 Local path](#4-local-path-contributors--air-gapped)). Published tarballs include `scripts/install-dev-to-paperclip.mjs` so those `package.json` scripts resolve; they do not affect how hosts load the plugin from npm.
+
 ### 2. Git tag
 
 The host runs `npm install` on the spec you pass—pin a **semver tag**.
@@ -57,6 +61,8 @@ curl -X POST "https://<your-board-host>/api/plugins/install" \
   -H "Content-Type: application/json" \
   -d '{"packageName":"/absolute/path/to/paperclip-plugin-agentmail","isLocalPath":true}'
 ```
+
+**Live dev against a local Paperclip (`pnpm dev`, default `local_trusted`):** from this repo, run `pnpm run paperclip:dev-sync:build` (build + register or upgrade in one step). Subsequent edits: same command, or `pnpm run paperclip:dev-sync` if you already built. Override the API base with `PAPERCLIP_ORIGIN` (default `http://127.0.0.1:3100`). Authenticated boards need `PAPERCLIP_COOKIE` set to the browser `Cookie` header for your session.
 
 Inside a full Paperclip monorepo (optional dev flow):
 

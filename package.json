@@ -35,6 +35,7 @@
     "dist/**/*.js",
     "dist/**/*.d.ts",
     "dist/**/*.d.ts.map",
+    "scripts/install-dev-to-paperclip.mjs",
     "README.md",
     "LICENSE",
     "CHANGELOG.md",
@@ -56,7 +57,9 @@
     "pack:check": "npm pack --dry-run --ignore-scripts",
     "prepack": "npm run build",
     "verify": "npm run typecheck && npm run test && npm run build && npm run pack:check",
-    "release:check": "npm run verify"
+    "release:check": "npm run verify",
+    "paperclip:dev-sync": "node ./scripts/install-dev-to-paperclip.mjs",
+    "paperclip:dev-sync:build": "node ./scripts/install-dev-to-paperclip.mjs --build"
   },
   "dependencies": {
     "@paperclipai/plugin-sdk": "2026.427.0",

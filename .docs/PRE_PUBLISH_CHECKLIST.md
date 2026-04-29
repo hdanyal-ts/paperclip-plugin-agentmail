@@ -5,7 +5,7 @@ Run before tagging **`v*`** / publishing **`@hdanyal/paperclip-plugin-agentmail`
 ## Tarball
 
 - `npm run verify` (includes `npm pack --dry-run`).
-- Inspect `npm pack --json` output: no secrets, no stray paths; `files` lists only runtime + docs you intend.
+- Inspect `npm pack --json` output: no secrets, no stray paths; `files` lists only runtime + docs you intend. **`scripts/install-dev-to-paperclip.mjs`** is included on purpose so `paperclip:dev-sync*` scripts work from the tarball; it is not a runtime dependency of the plugin.
 
 ## Clean install smoke
 

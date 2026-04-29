@@ -16,7 +16,6 @@ In a full **Paperclip** workspace the root **`package.json`** may use **`overrid
 - Typical layout: **`definePlugin` + `runWorker`** in **`src/worker.ts`**, default manifest export **`src/manifest.ts`**, React settings UI **`src/ui/`**.
 - For bundler presets see [`@paperclipai/plugin-sdk/bundlers`](https://www.npmjs.com/package/@paperclipai/plugin-sdk) and **[docs/BUILDING-PAPERCLIP-PLUGINS.md](./docs/BUILDING-PAPERCLIP-PLUGINS.md)**.
 
-## Build
 
 From this repo:
 

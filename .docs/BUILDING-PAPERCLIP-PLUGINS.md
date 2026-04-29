@@ -19,7 +19,6 @@ Applies to plugins that use [`@paperclipai/plugin-sdk`](https://www.npmjs.com/pa
 
 Use [`createPluginBundlerPresets`](https://www.npmjs.com/package/@paperclipai/plugin-sdk) from `@paperclipai/plugin-sdk/bundlers` with esbuild, or mirror its **externals** if you bundle UI yourself: `@paperclipai/plugin-sdk/ui`, `@paperclipai/plugin-sdk/ui/hooks`, `react`, `react-dom`, `react/jsx-runtime`.
 
-## References
 
 - [Paperclip plugin spec](https://github.com/paperclipai/paperclip/blob/master/doc/plugins/PLUGIN_SPEC.md)
 - [THIRD_PARTY_PLUGINS.md](https://github.com/paperclipai/paperclip/blob/master/doc/plugins/THIRD_PARTY_PLUGINS.md)
